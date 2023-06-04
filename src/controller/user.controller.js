@@ -4,9 +4,9 @@ const route = express.Router();
 const { buildResponse } = require(`../helper/buildResponse`)
 const { isValidUserId, isValidUserBody } = require(`../helper/isValidUserId`)
 
-route.get(`/`, async (req, res) => {
-  res.send(`ok`);
-});
+// route.get(`/`, async (req, res) => {
+//   res.send(`ok`);
+// });
 
 route.get(`/`, async (req, res) => {
   try {
@@ -29,11 +29,9 @@ route.get(`/:id`, isValidUserId, async (req, res) => {
 
 route.post(`/`, isValidUserBody, async (req, res) => {
   try {
-    route.post(`/`, async (req, res) => {
       const { name, surname, email, pwd } = req.body;
       const data = await createUser(name, surname, email, pwd);
       res.send(data);
-    });
   } catch (error) {
     buildResponse(res, 404, error.message);
   }
@@ -42,8 +40,8 @@ route.post(`/`, isValidUserBody, async (req, res) => {
 route.put(`/:id`, isValidUserId, isValidUserBody, async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, surname, email, pwd, task, user_id } = req.body;
-    const data = await updateUser(id, name, surname, email, pwd, task, user_id);
+    const { name, surname, email, pwd} = req.body;
+    const data = await updateUser(id, name, surname, email, pwd);
     res.send(data);
   } catch (error) {
     buildResponse(res, 404, error.message);

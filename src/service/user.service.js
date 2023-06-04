@@ -24,8 +24,8 @@ async function createUser(name, surname, email, pwd) {
   return data;
 }
 
-async function updateUser(id, name, surname, email, pwd, task, user_id) {
-  const data = await updateUserDb(id, name, surname, email, pwd, task, user_id);
+async function updateUser(id, name, surname, email, pwd) {
+  const data = await updateUserDb(id, name, surname, email, pwd);
   if (!data.length) throw new Error(`бд не заполнена`);
   return data;
 }

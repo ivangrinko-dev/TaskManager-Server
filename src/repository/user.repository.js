@@ -1,52 +1,49 @@
-const { pool } = require(`../db`)
+const { pool } = require(`../db`);
 
 async function getAllUserDb() {
-    const client = await pool.connect();
-    const sql = 'SELECT * FROM users JOIN tasks ON users.tasks_id = users_tasks.id ';
-    const result = (await client.query(sql)).rows;
-    return result;
+  const client = await pool.connect();
+  const sql = "SELECT * FROM users";
+  const result = (await client.query(sql)).rows;
+  return result;
 }
 
-
-
 async function getUserByIdDb(id) {
-    const client = await pool.connect();
+  const client = await pool.connect();
 
-    const sql =
-        'SELECT * FROM users JOIN tasks ON users.tasks_id = users_tasks.id where users.id = $1';
-    const result = (await client.query(sql, [id])).rows;
+  const sql = "SELECT * FROM users  where id = $1";
+  const result = (await client.query(sql, [id])).rows;
 
-    return result;
+  return result;
 }
 
 async function createUserDb(name, surname, email, pwd) {
-    const client = await pool.connect()
-    const sql = `insert into users (name, surname, email, pwd) values ($1, $2, $3, $4) returning *`
-    const result = (await client.query(sql, [name, surname, email, pwd])).rows
-    return result;
+  const client = await pool.connect();
+  const sql = `insert into users (name, surname, email, pwd) values ($1, $2, $3, $4) returning *`;
+  const result = (await client.query(sql, [name, surname, email, pwd])).rows;
+  return result;
 }
-
 
 async function updateUserDb(id, name, surname, email, pwd, task, user_id) {
-    const client = await pool.connect();
+  const client = await pool.connect();
 
-    const sql = `update users set name = $1, surname  = $2, email = $3, pwd = $4 where id = $5 returning *`;
-    const result = (await client.query(sql, [name, surname, email, pwd, id])).rows;
-    const sql_2 = `update tasks set task = $1, user_id = $2 where info_id = $3 returning * `;
-    const result_2 = (await client.query(sql_2, [task, user_id, result[0].id])).rows;
-    return [{ ...result[0], ...result_2[0] }];
+  const sql = `update users set name = $1, surname  = $2, email = $3, pwd = $4 where id = $5 returning *`;
+  const result = (await client.query(sql, [name, surname, email, pwd, id]))
+    .rows;
 
+  return result;
 }
-
-
-
-
 
 async function deleteUserDb(id) {
-    const client = await pool.connect()
-    const sql = `delete from users where id = $1 returning *`
-    const result = (await client.query(sql, [id])).rows
-    return result;
+  const client = await pool.connect();
+  const sql = `delete from users where id = $1 returning *`;
+  const result = (await client.query(sql, [id])).rows;
+  return result;
 }
 
-module.exports = { createUserDb, deleteUserDb, getAllUserDb, getUserByIdDb, updateUserDb }
+module.exports = {
+  createUserDb,
+  deleteUserDb,
+  getAllUserDb,
+  getUserByIdDb,
+  updateUserDb,
+};
