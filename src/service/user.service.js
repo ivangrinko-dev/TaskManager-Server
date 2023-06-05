@@ -1,10 +1,5 @@
 const { createUserDb, deleteUserDb, getAllUserDb, getUserByIdDb, updateUserDb } = require(`../repository/user.repository`);
 
-// async function createUser(name, surname, email, pwd) {
-//   const data = await createUserDb(name, surname, email, pwd);
-//   return data;
-// }
-
 
 async function getAllUser() {
   const data = await getAllUserDb();

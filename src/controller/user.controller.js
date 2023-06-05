@@ -2,11 +2,8 @@ const express = require(`express`);
 const { createUser, deleteUser, getAllUser, getUserById, updateUser } = require(`../service/user.service`)
 const route = express.Router();
 const { buildResponse } = require(`../helper/buildResponse`)
-const { isValidUserId, isValidUserBody } = require(`../helper/isValidUserId`)
+const { isValidUserId, isValidUserBody } = require(`../helper/validation`)
 
-// route.get(`/`, async (req, res) => {
-//   res.send(`ok`);
-// });
 
 route.get(`/`, async (req, res) => {
   try {
