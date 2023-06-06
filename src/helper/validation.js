@@ -12,6 +12,14 @@ function isValidTaskId(req, res, next) {
   next();
 }
 
+function isValidUserBody( req, res, next){
+  const {name, surname, city, birth, age} = req.body
+  if (!name) throw new Error(`name отсутствует`);
+  if (!surname) throw new Error(`surname отсутствует`);
+  if (!email) throw new Error(`email отсутствует`);
+  if (pwd <= 0) throw new Error(`pwd отрицательное число`)
+  next()
+  }
 function isValidTaskBody(req, res, next) {
   const {task, user_id } = req.body;
   if (!task) throw new Error(`task отсутствует`);
