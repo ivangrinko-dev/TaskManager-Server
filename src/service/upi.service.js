@@ -7,6 +7,8 @@ const {
 const salt = 1;
 
 async function createUser(name, surname, email, pwd) {
+  const user = await gerUserByEmail(email);
+  if (user.length) throw new Error(`такой user усть`);
   const hashpwd = await bcrypt.hash(pwd, salt);
   const data = await createUserDb(name, surname, email, hashpwd);
   if (!data.length) throw new Error(`user not created`);
@@ -15,10 +17,9 @@ async function createUser(name, surname, email, pwd) {
 
 async function authUser(email, pwd) {
   const user = await gerUserByEmail(email);
-  if (!user.length) throw new Error(`email not faund`);
-
+  if (!user.length) throw new Error(`email not found`);
   const bool = await bcrypt.compare(pwd, user[0].pwd);
-  if (!bool) throw new Error(`пароли не совпадают!!!!!`);
+  if (!bool) throw new Error(`!!!!!!! пароли не совпадают`);
   return user;
 }
 
