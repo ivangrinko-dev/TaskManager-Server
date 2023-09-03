@@ -9,11 +9,11 @@ async function createUserDb(name, surname, email, pwd) {
   return result;
 }
 
-async function gerUserByEmail(email) {
+async function getUserByEmail(email) {
   const client = await pool.connect();
   const sql = `select * from users where email = $1`;
   const result = (await client.query(sql, [email])).rows;
   return result;
 }
 
-module.exports = {createUserDb, gerUserByEmail};
+module.exports = {createUserDb, getUserByEmail};
